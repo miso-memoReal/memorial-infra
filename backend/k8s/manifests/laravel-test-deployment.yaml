@@ -1,0 +1,300 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    memorial.service: laravel-test
+  name: laravel-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      memorial.service: laravel-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        memorial.network/manifests-sail: "true"
+        memorial.service: laravel-test
+    spec:
+      containers:
+        - env:
+            - name: APP_DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_DEBUG
+                  name: memorial-backend-env
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_ENV
+                  name: memorial-backend-env
+            - name: APP_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_KEY
+                  name: memorial-backend-env
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_NAME
+                  name: memorial-backend-env
+            - name: APP_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: APP_URL
+                  name: memorial-backend-env
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_ACCESS_KEY_ID
+                  name: memorial-backend-env
+            - name: AWS_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_BUCKET
+                  name: memorial-backend-env
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_DEFAULT_REGION
+                  name: memorial-backend-env
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_SECRET_ACCESS_KEY
+                  name: memorial-backend-env
+            - name: AWS_USE_PATH_STYLE_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: AWS_USE_PATH_STYLE_ENDPOINT
+                  name: memorial-backend-env
+            - name: BROADCAST_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  key: BROADCAST_DRIVER
+                  name: memorial-backend-env
+            - name: CACHE_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  key: CACHE_DRIVER
+                  name: memorial-backend-env
+            - name: DB_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_CONNECTION
+                  name: memorial-backend-env
+            - name: DB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_DATABASE
+                  name: memorial-backend-env
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_HOST
+                  name: memorial-backend-env
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_PASSWORD
+                  name: memorial-backend-env
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_PORT
+                  name: memorial-backend-env
+            - name: DB_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DB_USERNAME
+                  name: memorial-backend-env
+            - name: FILESYSTEM_DISK
+              valueFrom:
+                configMapKeyRef:
+                  key: FILESYSTEM_DISK
+                  name: memorial-backend-env
+            - name: LARAVEL_SAIL
+              value: "1"
+            - name: LOG_CHANNEL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOG_CHANNEL
+                  name: memorial-backend-env
+            - name: LOG_DEPRECATIONS_CHANNEL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOG_DEPRECATIONS_CHANNEL
+                  name: memorial-backend-env
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  key: LOG_LEVEL
+                  name: memorial-backend-env
+            - name: MAIL_ENCRYPTION
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_ENCRYPTION
+                  name: memorial-backend-env
+            - name: MAIL_FROM_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_FROM_ADDRESS
+                  name: memorial-backend-env
+            - name: MAIL_FROM_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_FROM_NAME
+                  name: memorial-backend-env
+            - name: MAIL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_HOST
+                  name: memorial-backend-env
+            - name: MAIL_MAILER
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_MAILER
+                  name: memorial-backend-env
+            - name: MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_PASSWORD
+                  name: memorial-backend-env
+            - name: MAIL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_PORT
+                  name: memorial-backend-env
+            - name: MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  key: MAIL_USERNAME
+                  name: memorial-backend-env
+            - name: MEMCACHED_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: MEMCACHED_HOST
+                  name: memorial-backend-env
+            - name: PUSHER_APP_CLUSTER
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_APP_CLUSTER
+                  name: memorial-backend-env
+            - name: PUSHER_APP_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_APP_ID
+                  name: memorial-backend-env
+            - name: PUSHER_APP_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_APP_KEY
+                  name: memorial-backend-env
+            - name: PUSHER_APP_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_APP_SECRET
+                  name: memorial-backend-env
+            - name: PUSHER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_HOST
+                  name: memorial-backend-env
+            - name: PUSHER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_PORT
+                  name: memorial-backend-env
+            - name: PUSHER_SCHEME
+              valueFrom:
+                configMapKeyRef:
+                  key: PUSHER_SCHEME
+                  name: memorial-backend-env
+            - name: QUEUE_CONNECTION
+              valueFrom:
+                configMapKeyRef:
+                  key: QUEUE_CONNECTION
+                  name: memorial-backend-env
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_HOST
+                  name: memorial-backend-env
+            - name: REDIS_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_PASSWORD
+                  name: memorial-backend-env
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_PORT
+                  name: memorial-backend-env
+            - name: SAIL_XDEBUG_MODE
+              valueFrom:
+                configMapKeyRef:
+                  key: SAIL_XDEBUG_MODE
+                  name: memorial-backend-env
+            - name: SESSION_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  key: SESSION_DRIVER
+                  name: memorial-backend-env
+            - name: SESSION_LIFETIME
+              valueFrom:
+                configMapKeyRef:
+                  key: SESSION_LIFETIME
+                  name: memorial-backend-env
+            - name: VITE_APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_APP_NAME
+                  name: memorial-backend-env
+            - name: VITE_PUSHER_APP_CLUSTER
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_PUSHER_APP_CLUSTER
+                  name: memorial-backend-env
+            - name: VITE_PUSHER_APP_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_PUSHER_APP_KEY
+                  name: memorial-backend-env
+            - name: VITE_PUSHER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_PUSHER_HOST
+                  name: memorial-backend-env
+            - name: VITE_PUSHER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_PUSHER_PORT
+                  name: memorial-backend-env
+            - name: VITE_PUSHER_SCHEME
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_PUSHER_SCHEME
+                  name: memorial-backend-env
+            - name: WWWUSER
+              value: "1000"
+            - name: XDEBUG_CONFIG
+              value: client_host=host.docker.internal
+            - name: XDEBUG_MODE
+              value: "off"
+          image: ghcr.io/miso-memoreal/memorial-backend-php:IE-fix-prod-entrypoint
+          name: laravel-test
+          ports:
+            - containerPort: 5173
+              hostPort: 5173
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/php-fpm
+              name: php-fpm-socket
+      restartPolicy: Always
+      volumes:
+        - name: php-fpm-socket
+          persistentVolumeClaim:
+            claimName: php-fpm-socket
+status: {}
