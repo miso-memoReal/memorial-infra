@@ -282,7 +282,7 @@ spec:
               value: client_host=host.docker.internal
             - name: XDEBUG_MODE
               value: "off"
-          image: ghcr.io/miso-memoreal/memorial-backend-php:IE-fix-prod-entrypoint
+          image: ghcr.io/miso-memoreal/memorial-backend-php:main
           name: laravel-test
           ports:
             - containerPort: 5173

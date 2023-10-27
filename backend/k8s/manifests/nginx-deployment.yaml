@@ -19,7 +19,7 @@ spec:
         - env:
             - name: WWWUSER
               value: "1000"
-          image: ghcr.io/miso-memoreal/memorial-backend-nginx:IE-fix-prod-entrypoint
+          image: ghcr.io/miso-memoreal/memorial-backend-nginx:main
           name: nginx
           ports:
             - containerPort: 80
