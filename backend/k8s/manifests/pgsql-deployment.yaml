@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    memorial.service: pgsql
+  name: pgsql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      memorial.service: pgsql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        memorial.network/manifests-sail: "true"
+        memorial.service: pgsql
+    spec:
+      containers:
+        - env:
+            - name: PGPASSWORD
+              value: password
+            - name: POSTGRES_DB
+              value: memorial_backend
+            - name: POSTGRES_PASSWORD
+              value: password
+            - name: POSTGRES_USER
+              value: sail
+          image: postgis/postgis:15-3.4
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -q
+                - -d
+                - memorial_backend
+                - -U
+                - sail
+            failureThreshold: 3
+            timeoutSeconds: 5
+          name: pgsql
+          ports:
+            - containerPort: 5432
+              hostPort: 5432
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: sail-pgsql
+      restartPolicy: Always
+      volumes:
+        - name: sail-pgsql
+          persistentVolumeClaim:
+            claimName: sail-pgsql
+status: {}

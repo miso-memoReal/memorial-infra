@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      memorial.service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        memorial.network/manifests-sail: "true"
+        memorial.service: nginx
+    spec:
+      containers:
+        - env:
+            - name: WWWUSER
+              value: "1000"
+          image: ghcr.io/miso-memoreal/memorial-backend-nginx:main
+          name: nginx
+          ports:
+            - containerPort: 80
+              hostPort: 80
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/php-fpm
+              name: php-fpm-socket
+      restartPolicy: Always
+      volumes:
+        - name: php-fpm-socket
+          persistentVolumeClaim:
+            claimName: php-fpm-socket
+status: {}
