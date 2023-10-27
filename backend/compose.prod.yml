@@ -1,0 +1,80 @@
+services:
+
+    laravel.test:
+        image: ghcr.io/miso-memoreal/memorial-backend-php:main
+        build:
+            context: .
+            dockerfile: ./infra/php/Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+                WWWUSER: '${WWWUSER}'
+            target: app-deploy
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+        env_file:
+            - './.env'
+        volumes:
+            - 'php-fpm-socket:/var/run/php-fpm/'
+        networks:
+            - sail
+        depends_on:
+            pgsql:
+                condition: service_healthy
+            # redis:
+            #     condition: service_started
+    nginx:
+        image: ghcr.io/miso-memoreal/memorial-backend-nginx:main
+        build:
+            context: ./infra/nginx
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        environment:
+            WWWUSER: '${WWWUSER}'
+        ports:
+            - '${APP_PORT:-80}:80'
+        volumes:
+            - 'php-fpm-socket:/var/run/php-fpm/'
+        depends_on:
+            - laravel.test
+        networks:
+            - sail
+    pgsql:
+        image: 'postgis/postgis:15-3.4'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'sail-pgsql:/var/lib/postgresql/data'
+        networks:
+            - sail
+        healthcheck:
+            test:
+                - CMD
+                - pg_isready
+                - '-q'
+                - '-d'
+                - '${DB_DATABASE}'
+                - '-U'
+                - '${DB_USERNAME}'
+            retries: 3
+            timeout: 5s
+networks:
+    sail:
+        driver: bridge
+volumes:
+    sail-pgsql:
+        driver: local
+    php-fpm-socket:
+        driver: local
