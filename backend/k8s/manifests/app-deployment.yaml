@@ -2,20 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    memorial.service: laravel-test
-  name: laravel-test
+    memorial.service: app
+  name: app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      memorial.service: laravel-test
+      memorial.service: app
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         memorial.network/manifests-sail: "true"
-        memorial.service: laravel-test
+        memorial.service: app
     spec:
       containers:
         - env:
@@ -283,7 +283,7 @@ spec:
             - name: XDEBUG_MODE
               value: "off"
           image: ghcr.io/miso-memoreal/memorial-backend-php:main
-          name: laravel-test
+          name: app
           ports:
             - containerPort: 5173
               hostPort: 5173
