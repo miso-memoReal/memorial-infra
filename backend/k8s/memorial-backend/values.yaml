@@ -64,7 +64,7 @@ laravel:
 postgres:
   image:
     repository: postgis/postgis
-    tag: 15-3.4
+    tag: 16-3.4
   env:
     PGPASSWORD: password
     POSTGRES_DB: memorial_backend
