@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      memorial.service: nginx
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        memorial.network/manifests-sail: "true"
+        memorial.service: nginx
+    spec:
+      containers:
+        - env:
+            - name: WWWUSER
+              value: "{{ .Values.nginx.env.WWWUSER }}"
+          image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
+          name: nginx
+          ports:
+            - containerPort: {{ .Values.nginx.ports.containerPort }}
+              hostPort: {{ .Values.nginx.ports.hostPort }}
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/php-fpm
+              name: {{ .Values.nginx.pvc.name }}
+      volumes:
+        - name: php-fpm-socket
+          persistentVolumeClaim:
+            claimName: php-fpm-socket
+      restartPolicy: Always
