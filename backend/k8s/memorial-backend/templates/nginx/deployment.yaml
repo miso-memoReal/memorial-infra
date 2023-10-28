@@ -18,19 +18,19 @@ spec:
       containers:
         - env:
             - name: WWWUSER
-              value: {{ .Values.nginx.env.WWWUSER }}
+              value: "{{ .Values.nginx.env.WWWUSER }}"
           image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
           name: nginx
           ports:
-            - containerPort: {{ .Values.nginx.ports[0].containerPort }}
-              hostPort: {{ .Values.nginx.ports[0].hostPort }}
+            - containerPort: {{ .Values.nginx.ports.containerPort }}
+              hostPort: {{ .Values.nginx.ports.hostPort }}
               protocol: TCP
           resources: {}
           volumeMounts:
             - mountPath: /var/run/php-fpm
               name: {{ .Values.nginx.pvc.name }}
-      restartPolicy: Always
       volumes:
-        - name: {{ .Values.nginx.pvc.name }}
+        - name: php-fpm-socket
           persistentVolumeClaim:
-            claimName: {{ .Values.nginx.pvc.name }}
+            claimName: php-fpm-socket
+      restartPolicy: Always

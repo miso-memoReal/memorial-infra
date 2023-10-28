@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    memorial.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      memorial.service: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        memorial.network/manifests-sail: "true"
+        memorial.service: postgres
+    spec:
+      containers:
+        - env:
+            - name: PGPASSWORD
+              value: "{{ .Values.postgres.env.PGPASSWORD }}"
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgres.env.POSTGRES_DB }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgres.env.POSTGRES_PASSWORD }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgres.env.POSTGRES_USER }}"
+          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+          name: postgres
+          ports:
+              - containerPort: {{ .Values.postgres.ports.containerPort }}
+                hostPort: {{ .Values.postgres.ports.hostPort }}
+                protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: {{ .Values.postgres.pvc.name }}
+      restartPolicy: Always
+      volumes:
+        - name: {{ .Values.postgres.pvc.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.postgres.pvc.name }}
