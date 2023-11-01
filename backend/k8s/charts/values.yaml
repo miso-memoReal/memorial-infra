@@ -1,7 +1,7 @@
 nginx:
   image:
     repository: ghcr.io/miso-memoreal/memorial-backend-nginx
-    tag: IE-fix-permission
+    tag: main
   pvc:
     name: php-fpm-socket
     storage: 100Mi
@@ -13,7 +13,7 @@ nginx:
 laravel:
   image:
     repository: ghcr.io/miso-memoreal/memorial-backend-php
-    tag: IE-fix-permission
+    tag: main
   pvc:
     name: php-fpm-socket
     storage: 100Mi
