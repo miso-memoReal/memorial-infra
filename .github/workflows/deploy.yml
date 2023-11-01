@@ -1,0 +1,38 @@
+on:
+  push:
+    # branches:
+    #   - main
+
+name: Deploy
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      sha_short: ${{ steps.prepare.outputs.sha_short }}
+    steps:
+      - name: Checkout Backend
+        uses: actions/checkout@v4
+        with:
+            repository: miso-memoReal/memorial-backend
+      - name: Prepare
+        id: prepare
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+  deploy:
+    runs-on: ubuntu-latest
+    container: okteto/okteto:2.21.0
+    needs: [prepare]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: miso-memoReal/memorial-infra
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: "Deploy the preview environment"
+      run: |
+        okteto context use --token=${{ secrets.OKTETO_TOKEN }}
+        eval okteto kubeconfig
+        helm upgrade --install memorial-na2na-p backend/k8s/charts --set nginx.image.tag=${TAG_NAME} --set laravel.image.tag=${TAG_NAME}
+      env:
+        TAG_NAME: ${{ needs.prepare.outputs.sha_short }}
