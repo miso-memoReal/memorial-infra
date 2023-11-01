@@ -107,6 +107,9 @@ spec:
               value: "off"
           image: {{ .Values.laravel.image.repository }}:{{ .Values.laravel.image.tag }}
           name: app
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 0
           resources: {}
           volumeMounts:
             - mountPath: /var/run/php-fpm
