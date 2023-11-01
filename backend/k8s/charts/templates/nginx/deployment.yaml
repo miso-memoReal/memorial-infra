@@ -21,6 +21,9 @@ spec:
               value: "{{ .Values.nginx.env.WWWUSER }}"
           image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
           name: nginx
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           ports:
             - containerPort: {{ .Values.nginx.ports.containerPort }}
               hostPort: {{ .Values.nginx.ports.hostPort }}

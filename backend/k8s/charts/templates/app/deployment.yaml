@@ -108,7 +108,7 @@ spec:
           image: {{ .Values.laravel.image.repository }}:{{ .Values.laravel.image.tag }}
           name: app
           securityContext:
-            runAsUser: 1000
+            runAsUser: 0
             runAsGroup: 0
           resources: {}
           volumeMounts:
