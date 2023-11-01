@@ -18,7 +18,7 @@ laravel:
     name: php-fpm-socket
     storage: 100Mi
   env:
-    APP_KEY:
+    APP_KEY: base64:ORH8GelTP4n6hK5jANROtYkU3V0o43V+rM8BJOwII4Q=
     APP_URL: http://localhost:8080
     APP_DEBUG: true
     APP_ENV: production
@@ -27,9 +27,9 @@ laravel:
     CACHE_DRIVER: file
     DB_CONNECTION: pgsql
     DB_DATABASE: memorial_backend
-    DB_HOST: pgsql
+    DB_HOST: postgres
     DB_PASSWORD: password
-    DB_PORT: 3306
+    DB_PORT: 5432
     DB_USERNAME: memorial
     FILESYSTEM_DISK: local
     LARAVEL_SAIL: "1"
