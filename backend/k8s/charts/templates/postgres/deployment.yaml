@@ -27,6 +27,8 @@ spec:
               value: "{{ .Values.postgres.env.POSTGRES_PASSWORD }}"
             - name: POSTGRES_USER
               value: "{{ .Values.postgres.env.POSTGRES_USER }}"
+            - name: PGDATA
+              value: "{{ .Values.postgres.env.PGDATA }}"
           image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
           name: postgres
           ports:

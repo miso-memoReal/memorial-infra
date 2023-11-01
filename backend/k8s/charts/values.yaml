@@ -70,6 +70,8 @@ postgres:
     POSTGRES_DB: memorial_backend
     POSTGRES_PASSWORD: password
     POSTGRES_USER: memorial
+    # HACK: non-emptyで死ぬので一階層掘る
+    PGDATA: /var/lib/postgresql/data/postgres
   ports:
     containerPort: 5432
     hostPort: 5432

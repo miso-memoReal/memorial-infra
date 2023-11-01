@@ -1,0 +1,4 @@
+name: memoReal
+
+deploy:
+  - helm upgrade --install ${OKTETO_AUTODISCOVERY_RELEASE_NAME} backend/k8s/charts
