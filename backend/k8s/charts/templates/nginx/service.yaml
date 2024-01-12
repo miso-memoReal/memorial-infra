@@ -5,10 +5,11 @@ metadata:
   annotations:
     dev.okteto.com/auto-ingress: "true"
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: "http"
       port: 80
       targetPort: 80
+      nodePort: 30007
   selector:
     memorial.service: nginx
