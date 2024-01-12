@@ -10,6 +10,7 @@ nginx:
   ports:
     containerPort: 80
     hostPort: 80
+    nodePort: 30007
 laravel:
   image:
     repository: ghcr.io/miso-memoreal/memorial-backend-php
