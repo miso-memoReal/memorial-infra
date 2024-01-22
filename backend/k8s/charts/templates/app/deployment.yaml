@@ -8,15 +8,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      - memorial.service: app
-      - memorial.service: nginx
+      memorial.service: app-nginx
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         memorial.network/manifests-sail: "true"
-        memorial.service: app
+        memorial.service: app-nginx
     spec:
       containers:
         - name: app
