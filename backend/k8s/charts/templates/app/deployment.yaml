@@ -8,17 +8,27 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      memorial.service: app
+      memorial.service: app-nginx
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         memorial.network/manifests-sail: "true"
-        memorial.service: app
+        memorial.service: app-nginx
     spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox
+          env:
+            - name: DB_HOST
+              value: "{{ .Values.laravel.env.DB_HOST }}"
+            - name: DB_PORT
+              value: "{{ .Values.laravel.env.DB_PORT }}"
+          command: [ 'sh', '-c', 'until nc -z $DB_HOST $DB_PORT; do echo waiting for postgres; sleep 2; done;' ]
       containers:
-        - env:
+        - name: app
+          env:
             - name: APP_DEBUG
               value: "{{ .Values.laravel.env.APP_DEBUG }}"
             - name: APP_ENV
@@ -106,7 +116,6 @@ spec:
             - name: XDEBUG_MODE
               value: "off"
           image: {{ .Values.laravel.image.repository }}:{{ .Values.laravel.image.tag }}
-          name: app
           securityContext:
             runAsUser: 0
             runAsGroup: 0
@@ -114,6 +123,23 @@ spec:
           volumeMounts:
             - mountPath: /var/run/php-fpm
               name: {{ .Values.laravel.pvc.name }}
+        - name: nginx
+          env:
+            - name: WWWUSER
+              value: "{{ .Values.nginx.env.WWWUSER }}"
+          image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          ports:
+            - containerPort: {{ .Values.nginx.ports.containerPort }}
+              hostPort: {{ .Values.nginx.ports.hostPort }}
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/php-fpm
+              name: {{ .Values.nginx.pvc.name }}
+
       volumes:
         - name: php-fpm-socket
           persistentVolumeClaim:
