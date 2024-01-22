@@ -75,7 +75,5 @@ postgres:
     PGDATA: /var/lib/postgresql/data/postgres
   ports:
     containerPort: 5432
-    hostPort: 5432
   pvc:
-    name: memorial-pgsql
     storage: 100Mi

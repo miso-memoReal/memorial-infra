@@ -1,16 +1,15 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     memorial.service: postgres
   name: postgres
 spec:
+  serviceName: "postgres"
   replicas: 1
   selector:
     matchLabels:
       memorial.service: postgres
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -32,15 +31,19 @@ spec:
           image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
           name: postgres
           ports:
-              - containerPort: {{ .Values.postgres.ports.containerPort }}
-                hostPort: {{ .Values.postgres.ports.hostPort }}
-                protocol: TCP
+            - containerPort: {{ .Values.postgres.ports.containerPort }}
+              protocol: TCP
           resources: {}
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: {{ .Values.postgres.pvc.name }}
+              name: pgdata
       restartPolicy: Always
-      volumes:
-        - name: {{ .Values.postgres.pvc.name }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.postgres.pvc.name }}
+  volumeClaimTemplates:
+    - metadata:
+        name: pgdata
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.postgres.pvc.storage }}
