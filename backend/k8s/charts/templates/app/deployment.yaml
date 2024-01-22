@@ -8,7 +8,8 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      memorial.service: app
+      - memorial.service: app
+      - memorial.service: nginx
   strategy:
     type: Recreate
   template:
@@ -18,7 +19,8 @@ spec:
         memorial.service: app
     spec:
       containers:
-        - env:
+        - name: app
+          env:
             - name: APP_DEBUG
               value: "{{ .Values.laravel.env.APP_DEBUG }}"
             - name: APP_ENV
@@ -106,7 +108,6 @@ spec:
             - name: XDEBUG_MODE
               value: "off"
           image: {{ .Values.laravel.image.repository }}:{{ .Values.laravel.image.tag }}
-          name: app
           securityContext:
             runAsUser: 0
             runAsGroup: 0
@@ -114,6 +115,23 @@ spec:
           volumeMounts:
             - mountPath: /var/run/php-fpm
               name: {{ .Values.laravel.pvc.name }}
+        - name: nginx
+          env:
+            - name: WWWUSER
+              value: "{{ .Values.nginx.env.WWWUSER }}"
+          image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          ports:
+            - containerPort: {{ .Values.nginx.ports.containerPort }}
+              hostPort: {{ .Values.nginx.ports.hostPort }}
+              protocol: TCP
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/run/php-fpm
+              name: {{ .Values.nginx.pvc.name }}
+
       volumes:
         - name: php-fpm-socket
           persistentVolumeClaim:
