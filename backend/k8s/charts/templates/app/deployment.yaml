@@ -17,6 +17,15 @@ spec:
         memorial.network/manifests-sail: "true"
         memorial.service: app-nginx
     spec:
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox
+          env:
+            - name: DB_HOST
+              value: "{{ .Values.laravel.env.DB_HOST }}"
+            - name: DB_PORT
+              value: "{{ .Values.laravel.env.DB_PORT }}"
+          command: [ 'sh', '-c', 'until nc -z $DB_HOST $DB_PORT; do echo waiting for postgres; sleep 2; done;' ]
       containers:
         - name: app
           env:
