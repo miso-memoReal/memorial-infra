@@ -2,9 +2,6 @@ nginx:
   image:
     repository: ghcr.io/miso-memoreal/memorial-backend-nginx
     tag: main
-  pvc:
-    name: php-fpm-socket
-    storage: 100Mi
   env:
     WWWUSER: "1000"
   ports:
@@ -15,9 +12,6 @@ laravel:
   image:
     repository: ghcr.io/miso-memoreal/memorial-backend-php
     tag: main
-  pvc:
-    name: php-fpm-socket
-    storage: 100Mi
   env:
     APP_KEY: base64:ORH8GelTP4n6hK5jANROtYkU3V0o43V+rM8BJOwII4Q=
     APP_URL: http://localhost:8080
