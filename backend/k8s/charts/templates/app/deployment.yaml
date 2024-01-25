@@ -121,8 +121,8 @@ spec:
             runAsGroup: 0
           resources: {}
           volumeMounts:
-            - mountPath: /var/run/php-fpm
-              name: {{ .Values.laravel.pvc.name }}
+            - mountPath: /var/run/php-fpm/
+              name: socket-dir
         - name: nginx
           env:
             - name: WWWUSER
@@ -137,11 +137,8 @@ spec:
               protocol: TCP
           resources: {}
           volumeMounts:
-            - mountPath: /var/run/php-fpm
-              name: {{ .Values.nginx.pvc.name }}
-
+            - mountPath: /var/run/php-fpm/
+              name: socket-dir
       volumes:
-        - name: php-fpm-socket
-          persistentVolumeClaim:
-            claimName: php-fpm-socket
-      restartPolicy: Always
+      - name: socket-dir
+        emptyDir: {}
