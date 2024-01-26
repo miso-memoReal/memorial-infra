@@ -3,3 +3,4 @@
 .env.production
 .DS_Store
 manifests-env-configmap.yaml
+.idea
