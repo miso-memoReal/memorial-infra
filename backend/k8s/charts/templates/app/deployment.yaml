@@ -119,7 +119,13 @@ spec:
           securityContext:
             runAsUser: 0
             runAsGroup: 0
-          resources: {}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.app.requests.cpu }}
+              memory: {{ .Values.resources.app.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.app.limits.cpu }}
+              memory: {{ .Values.resources.app.limits.memory }}
           volumeMounts:
             - mountPath: /var/run/php-fpm/
               name: socket-dir

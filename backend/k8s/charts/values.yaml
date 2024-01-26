@@ -14,6 +14,14 @@ images:
     tag: 15-3.4
 pvc:
   postgres: 100Mi
+resources:
+  app:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
 envs:
   nginx:
     WWWUSER: "1000"
