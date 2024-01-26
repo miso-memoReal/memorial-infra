@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    kubernetes.io/ingress.class: "public"
+spec:
+  rules:
+  - host: "{{ .Values.laravel.env.APP_URL_DOMAIN }}"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app-nginx
+            port:
+              number: 80

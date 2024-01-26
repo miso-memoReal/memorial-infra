@@ -14,7 +14,8 @@ laravel:
     tag: main
   env:
     APP_KEY: base64:ORH8GelTP4n6hK5jANROtYkU3V0o43V+rM8BJOwII4Q=
-    APP_URL: http://localhost:8080
+    APP_URL_SCHEME: "https://"
+    APP_URL_DOMAIN: "localhost:8080"
     APP_DEBUG: true
     APP_ENV: production
     APP_NAME: memoReal
