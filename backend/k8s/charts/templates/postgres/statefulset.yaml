@@ -19,19 +19,19 @@ spec:
       containers:
         - env:
             - name: PGPASSWORD
-              value: "{{ .Values.postgres.env.PGPASSWORD }}"
+              value: "{{ .Values.envs.postgres.PGPASSWORD }}"
             - name: POSTGRES_DB
-              value: "{{ .Values.postgres.env.POSTGRES_DB }}"
+              value: "{{ .Values.envs.postgres.POSTGRES_DB }}"
             - name: POSTGRES_PASSWORD
-              value: "{{ .Values.postgres.env.POSTGRES_PASSWORD }}"
+              value: "{{ .Values.envs.postgres.POSTGRES_PASSWORD }}"
             - name: POSTGRES_USER
-              value: "{{ .Values.postgres.env.POSTGRES_USER }}"
+              value: "{{ .Values.envs.postgres.POSTGRES_USER }}"
             - name: PGDATA
-              value: "{{ .Values.postgres.env.PGDATA }}"
-          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+              value: "{{ .Values.envs.postgres.PGDATA }}"
+          image: {{ .Values.images.postgres.repository }}:{{ .Values.images.postgres.tag }}
           name: postgres
           ports:
-            - containerPort: {{ .Values.postgres.ports.containerPort }}
+            - containerPort: {{ .Values.ports.postgres }}
               protocol: TCP
           resources: {}
           volumeMounts:
@@ -46,4 +46,4 @@ spec:
           - ReadWriteOnce
         resources:
           requests:
-            storage: {{ .Values.postgres.pvc.storage }}
+            storage: {{ .Values.pvc.postgres }}
