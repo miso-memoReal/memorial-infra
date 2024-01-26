@@ -38,7 +38,7 @@ spec:
             - name: APP_NAME
               value: "{{ .Values.laravel.env.APP_NAME }}"
             - name: APP_URL
-              value: "{{ .Values.laravel.env.APP_URL }}"
+              value: "{{ .Values.laravel.env.APP_URL_SCHEME }}{{ .Values.laravel.env.APP_URL_DOMAIN }}"
             - name: BROADCAST_DRIVER
               value: "{{ .Values.laravel.env.BROADCAST_DRIVER }}"
             - name: CACHE_DRIVER
