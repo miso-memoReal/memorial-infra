@@ -9,7 +9,7 @@ spec:
     matchLabels:
       memorial.service: app-nginx
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       labels:
