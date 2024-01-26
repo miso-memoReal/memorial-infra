@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: "public"
 spec:
   rules:
-  - host: "{{ .Values.laravel.env.APP_URL_DOMAIN }}"
+  - host: "{{ .Values.envs.app.APP_URL_DOMAIN }}"
     http:
       paths:
       - pathType: Prefix
@@ -15,4 +15,4 @@ spec:
           service:
             name: app-nginx
             port:
-              number: 80
+              number: {{ .Values.ports.ingress }}

@@ -1,18 +1,30 @@
-nginx:
-  image:
+ports:
+  ingress: 80
+  postgres: 5432
+  nginx: 80
+images:
+  nginx:
     repository: ghcr.io/miso-memoreal/memorial-backend-nginx
     tag: main
-  env:
-    WWWUSER: "1000"
-  ports:
-    containerPort: 80
-    hostPort: 80
-    nodePort: 30007
-laravel:
-  image:
+  app:
     repository: ghcr.io/miso-memoreal/memorial-backend-php
     tag: main
-  env:
+  postgres:
+    repository: postgis/postgis
+    tag: 15-3.4
+pvc:
+  postgres: 100Mi
+envs:
+  nginx:
+    WWWUSER: "1000"
+  postgres:
+    PGPASSWORD: password
+    POSTGRES_DB: memorial_backend
+    POSTGRES_PASSWORD: password
+    POSTGRES_USER: memorial
+    # HACK: non-emptyで死ぬので一階層掘る
+    PGDATA: /var/lib/postgresql/data/postgres
+  app:
     APP_KEY: base64:ORH8GelTP4n6hK5jANROtYkU3V0o43V+rM8BJOwII4Q=
     APP_URL_SCHEME: "https://"
     APP_URL_DOMAIN: "localhost:8080"
@@ -57,18 +69,3 @@ laravel:
     WWWUSER: "1000"
     XDEBUG_CONFIG: client_host=host.docker.internal
     XDEBUG_MODE: "off"
-postgres:
-  image:
-    repository: postgis/postgis
-    tag: 15-3.4
-  env:
-    PGPASSWORD: password
-    POSTGRES_DB: memorial_backend
-    POSTGRES_PASSWORD: password
-    POSTGRES_USER: memorial
-    # HACK: non-emptyで死ぬので一階層掘る
-    PGDATA: /var/lib/postgresql/data/postgres
-  ports:
-    containerPort: 5432
-  pvc:
-    storage: 100Mi

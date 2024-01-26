@@ -22,100 +22,100 @@ spec:
           image: busybox
           env:
             - name: DB_HOST
-              value: "{{ .Values.laravel.env.DB_HOST }}"
+              value: "{{ .Values.envs.app.DB_HOST }}"
             - name: DB_PORT
-              value: "{{ .Values.laravel.env.DB_PORT }}"
+              value: "{{ .Values.envs.app.DB_PORT }}"
           command: [ 'sh', '-c', 'until nc -z $DB_HOST $DB_PORT; do echo waiting for postgres; sleep 2; done;' ]
       containers:
         - name: app
           env:
             - name: APP_DEBUG
-              value: "{{ .Values.laravel.env.APP_DEBUG }}"
+              value: "{{ .Values.envs.app.APP_DEBUG }}"
             - name: APP_ENV
-              value: "{{ .Values.laravel.env.APP_ENV }}"
+              value: "{{ .Values.envs.app.APP_ENV }}"
             - name: APP_KEY
-              value: "{{ .Values.laravel.env.APP_KEY }}"
+              value: "{{ .Values.envs.app.APP_KEY }}"
             - name: APP_NAME
-              value: "{{ .Values.laravel.env.APP_NAME }}"
+              value: "{{ .Values.envs.app.APP_NAME }}"
             - name: APP_URL
-              value: "{{ .Values.laravel.env.APP_URL_SCHEME }}{{ .Values.laravel.env.APP_URL_DOMAIN }}"
+              value: "{{ .Values.envs.app.APP_URL_SCHEME }}{{ .Values.envs.app.APP_URL_DOMAIN }}"
             - name: BROADCAST_DRIVER
-              value: "{{ .Values.laravel.env.BROADCAST_DRIVER }}"
+              value: "{{ .Values.envs.app.BROADCAST_DRIVER }}"
             - name: CACHE_DRIVER
-              value: "{{ .Values.laravel.env.CACHE_DRIVER }}"
+              value: "{{ .Values.envs.app.CACHE_DRIVER }}"
             - name: DB_CONNECTION
-              value: "{{ .Values.laravel.env.DB_CONNECTION }}"
+              value: "{{ .Values.envs.app.DB_CONNECTION }}"
             - name: DB_DATABASE
-              value: "{{ .Values.laravel.env.DB_DATABASE }}"
+              value: "{{ .Values.envs.app.DB_DATABASE }}"
             - name: DB_HOST
-              value: "{{ .Values.laravel.env.DB_HOST }}"
+              value: "{{ .Values.envs.app.DB_HOST }}"
             - name: DB_PASSWORD
-              value: "{{ .Values.laravel.env.DB_PASSWORD }}"
+              value: "{{ .Values.envs.app.DB_PASSWORD }}"
             - name: DB_PORT
-              value: "{{ .Values.laravel.env.DB_PORT }}"
+              value: "{{ .Values.envs.app.DB_PORT }}"
             - name: DB_USERNAME
-              value: "{{ .Values.laravel.env.DB_USERNAME }}"
+              value: "{{ .Values.envs.app.DB_USERNAME }}"
             - name: FILESYSTEM_DISK
-              value: "{{ .Values.laravel.env.FILESYSTEM_DISK }}"
+              value: "{{ .Values.envs.app.FILESYSTEM_DISK }}"
             - name: LARAVEL_SAIL
               value: "1"
             - name: LOG_CHANNEL
-              value: "{{ .Values.laravel.env.LOG_CHANNEL }}"
+              value: "{{ .Values.envs.app.LOG_CHANNEL }}"
             - name: LOG_DEPRECATIONS_CHANNEL
-              value: "{{ .Values.laravel.env.LOG_DEPRECATIONS_CHANNEL }}"
+              value: "{{ .Values.envs.app.LOG_DEPRECATIONS_CHANNEL }}"
             - name: LOG_LEVEL
-              value: "{{ .Values.laravel.env.LOG_LEVEL }}"
+              value: "{{ .Values.envs.app.LOG_LEVEL }}"
             - name: MAIL_ENCRYPTION
-              value: "{{ .Values.laravel.env.MAIL_ENCRYPTION }}"
+              value: "{{ .Values.envs.app.MAIL_ENCRYPTION }}"
             - name: MAIL_FROM_ADDRESS
-              value: "{{ .Values.laravel.env.MAIL_FROM_ADDRESS }}"
+              value: "{{ .Values.envs.app.MAIL_FROM_ADDRESS }}"
             - name: MAIL_FROM_NAME
-              value: "{{ .Values.laravel.env.MAIL_FROM_NAME }}"
+              value: "{{ .Values.envs.app.MAIL_FROM_NAME }}"
             - name: MAIL_HOST
-              value: "{{ .Values.laravel.env.MAIL_HOST }}"
+              value: "{{ .Values.envs.app.MAIL_HOST }}"
             - name: MAIL_MAILER
-              value: "{{ .Values.laravel.env.MAIL_MAILER }}"
+              value: "{{ .Values.envs.app.MAIL_MAILER }}"
             - name: MAIL_PASSWORD
-              value: "{{ .Values.laravel.env.MAIL_PASSWORD }}"
+              value: "{{ .Values.envs.app.MAIL_PASSWORD }}"
             - name: MAIL_PORT
-              value: "{{ .Values.laravel.env.MAIL_PORT }}"
+              value: "{{ .Values.envs.app.MAIL_PORT }}"
             - name: MAIL_USERNAME
-              value: "{{ .Values.laravel.env.MAIL_USERNAME }}"
+              value: "{{ .Values.envs.app.MAIL_USERNAME }}"
             - name: MEMCACHED_HOST
-              value: "{{ .Values.laravel.env.MEMCACHED_HOST }}"
+              value: "{{ .Values.envs.app.MEMCACHED_HOST }}"
             - name: QUEUE_CONNECTION
-              value: "{{ .Values.laravel.env.QUEUE_CONNECTION }}"
+              value: "{{ .Values.envs.app.QUEUE_CONNECTION }}"
             - name: REDIS_HOST
-              value: "{{ .Values.laravel.env.REDIS_HOST }}"
+              value: "{{ .Values.envs.app.REDIS_HOST }}"
             - name: REDIS_PASSWORD
-              value: "{{ .Values.laravel.env.REDIS_PASSWORD }}"
+              value: "{{ .Values.envs.app.REDIS_PASSWORD }}"
             - name: REDIS_PORT
-              value: "{{ .Values.laravel.env.REDIS_PORT }}"
+              value: "{{ .Values.envs.app.REDIS_PORT }}"
             - name: SAIL_XDEBUG_MODE
-              value: "{{ .Values.laravel.env.SAIL_XDEBUG_MODE }}"
+              value: "{{ .Values.envs.app.SAIL_XDEBUG_MODE }}"
             - name: SESSION_DRIVER
-              value: "{{ .Values.laravel.env.SESSION_DRIVER }}"
+              value: "{{ .Values.envs.app.SESSION_DRIVER }}"
             - name: SESSION_LIFETIME
-              value: "{{ .Values.laravel.env.SESSION_LIFETIME }}"
+              value: "{{ .Values.envs.app.SESSION_LIFETIME }}"
             - name: VITE_APP_NAME
-              value: "{{ .Values.laravel.env.VITE_APP_NAME }}"
+              value: "{{ .Values.envs.app.VITE_APP_NAME }}"
             - name: VITE_PUSHER_APP_CLUSTER
-              value: "{{ .Values.laravel.env.VITE_PUSHER_APP_CLUSTER }}"
+              value: "{{ .Values.envs.app.VITE_PUSHER_APP_CLUSTER }}"
             - name: VITE_PUSHER_APP_KEY
-              value: "{{ .Values.laravel.env.VITE_PUSHER_APP_KEY }}"
+              value: "{{ .Values.envs.app.VITE_PUSHER_APP_KEY }}"
             - name: VITE_PUSHER_HOST
-              value: "{{ .Values.laravel.env.VITE_PUSHER_HOST }}"
+              value: "{{ .Values.envs.app.VITE_PUSHER_HOST }}"
             - name: VITE_PUSHER_PORT
-              value: "{{ .Values.laravel.env.VITE_PUSHER_PORT }}"
+              value: "{{ .Values.envs.app.VITE_PUSHER_PORT }}"
             - name: VITE_PUSHER_SCHEME
-              value: "{{ .Values.laravel.env.VITE_PUSHER_SCHEME }}"
+              value: "{{ .Values.envs.app.VITE_PUSHER_SCHEME }}"
             - name: WWWUSER
               value: "1000"
             - name: XDEBUG_CONFIG
               value: client_host=host.docker.internal
             - name: XDEBUG_MODE
               value: "off"
-          image: {{ .Values.laravel.image.repository }}:{{ .Values.laravel.image.tag }}
+          image: {{ .Values.images.app.repository }}:{{ .Values.images.app.tag }}
           securityContext:
             runAsUser: 0
             runAsGroup: 0
@@ -126,13 +126,13 @@ spec:
         - name: nginx
           env:
             - name: WWWUSER
-              value: "{{ .Values.nginx.env.WWWUSER }}"
-          image: {{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag }}
+              value: "{{ .Values.envs.nginx.WWWUSER }}"
+          image: {{ .Values.images.nginx.repository }}:{{ .Values.images.nginx.tag }}
           securityContext:
             runAsUser: 0
             runAsGroup: 0
           ports:
-            - containerPort: {{ .Values.nginx.ports.containerPort }}
+            - containerPort: {{ .Values.ports.nginx }}
               protocol: TCP
           resources: {}
           volumeMounts:
