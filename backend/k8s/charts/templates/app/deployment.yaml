@@ -133,7 +133,6 @@ spec:
             runAsGroup: 0
           ports:
             - containerPort: {{ .Values.nginx.ports.containerPort }}
-              hostPort: {{ .Values.nginx.ports.hostPort }}
               protocol: TCP
           resources: {}
           volumeMounts:
