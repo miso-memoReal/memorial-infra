@@ -5,7 +5,6 @@ metadata:
     memorial.service: app
   name: app
 spec:
-  replicas: 3
   selector:
     matchLabels:
       memorial.service: app-nginx
