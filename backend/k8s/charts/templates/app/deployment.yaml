@@ -5,12 +5,11 @@ metadata:
     memorial.service: app
   name: app
 spec:
-  replicas: 3
   selector:
     matchLabels:
       memorial.service: app-nginx
   strategy:
-    type: Recreate
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -119,7 +118,13 @@ spec:
           securityContext:
             runAsUser: 0
             runAsGroup: 0
-          resources: {}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.app.requests.cpu }}
+              memory: {{ .Values.resources.app.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.app.limits.cpu }}
+              memory: {{ .Values.resources.app.limits.memory }}
           volumeMounts:
             - mountPath: /var/run/php-fpm/
               name: socket-dir
@@ -134,7 +139,13 @@ spec:
           ports:
             - containerPort: {{ .Values.ports.nginx }}
               protocol: TCP
-          resources: {}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.app.requests.cpu }}
+              memory: {{ .Values.resources.app.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.app.limits.cpu }}
+              memory: {{ .Values.resources.app.limits.memory }}
           volumeMounts:
             - mountPath: /var/run/php-fpm/
               name: socket-dir
