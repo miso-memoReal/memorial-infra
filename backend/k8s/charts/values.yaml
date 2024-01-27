@@ -38,6 +38,7 @@ envs:
     # HACK: non-emptyで死ぬので一階層掘る
     PGDATA: /var/lib/postgresql/data/postgres
   app:
+    # NOTE: デプロイ時にApplicationSetで本物のKeyを流し込む
     APP_KEY: base64:ORH8GelTP4n6hK5jANROtYkU3V0o43V+rM8BJOwII4Q=
     APP_URL_SCHEME: "https://"
     APP_URL_DOMAIN: "localhost:8080"
